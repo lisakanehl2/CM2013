@@ -4,6 +4,7 @@ function main()
 clc;
 close all;
 clearvars -except config;
+%test naya
 
 % Add src directory and subdirectories to path
 addpath(genpath('src'));

@@ -1,19 +1,31 @@
-# -- Project Configuration --
 
-# Set the current iteration of the project (1-4). 
-# This controls which parts of the pipeline are active.
+RUN_STEP12_SANITY = True   # set False to run the normal professor pipeline
+
+#SIGNAL
+TARGET_FS = 100            # We set at 100 Hz because this is what the instructions tells us to do 
+EPOCH_LEN_S = 30           # 30-second epochs , again because it is what the instructions tells us to do 
+
+# CHANNELS
+EEG_CHANNELS = ["EEG-C1", "EEG-C2"]
+EOG_CHANNELS = ["EOG-L", "EOG-R"]
+EMG_CHANNELS = ["EMG-Chin"]
+
+
 CURRENT_ITERATION = 1
 
 # Set to True to use cached data for preprocessing and feature extraction.
-USE_CACHE = False  # Temporarily disabled for testing with real data
+USE_CACHE = False  
 
 # -- File Paths --
 import os
-DATA_DIR = '../data/'
-TRAINING_DIR = f'{DATA_DIR}training/'
-HOLDOUT_DIR = f'{DATA_DIR}holdout/'
-SAMPLE_DIR = f'{DATA_DIR}sample/'
-CACHE_DIR = 'cache/'
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))   #Here he looks for a file in the same path as the one where the code is which is why we don't need to specify where in the laptop the files are located 
+# Then it will seperate each path depending on what we require
+DATA_DIR     = os.path.join(BASE_DIR, "data")   + os.sep
+TRAINING_DIR = os.path.join(DATA_DIR, "training") + os.sep
+HOLDOUT_DIR  = os.path.join(DATA_DIR, "holdout")  + os.sep
+SAMPLE_DIR   = os.path.join(DATA_DIR, "sample")   + os.sep
+CACHE_DIR    = os.path.join(BASE_DIR, "cache")    + os.sep
 
 # Validate and create directories if needed
 if not os.path.exists(DATA_DIR):
@@ -22,7 +34,7 @@ if not os.path.exists(CACHE_DIR):
     print(f"Creating cache directory: {CACHE_DIR}")
     os.makedirs(CACHE_DIR, exist_ok=True)
 
-# -- Preprocessing --
+# PREPROCESSING
 LOW_PASS_FILTER_FREQ = 40  # Hz
 
 # -- Feature Extraction --
